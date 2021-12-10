@@ -1,15 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Route, Redirect } from "react-router";
-import { AppStoreContext } from "./Store";
 
-function PrivateRoute({ component:Component, ...rest }) {
+function PrivateRoute({ comp:Component, ...rest }) {
     const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
     return (
         <Route
             {...rest}
             render={
                 (props) => {
-                    isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
+                   return  isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
                 }
             }
         />

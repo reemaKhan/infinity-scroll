@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import {Form} from 'react-bootstrap';
-import { useHistory} from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
+import { withRouter } from 'react-router';
 import './login.css';
+import { Box, Typography, TextField, Container, Button } from "@mui/material";
 
-const Login = ({setIsAuthenticated}) => {
+const Login = ({ setIsAuthenticated, history }) => {
     const [uname, setUname] = useState('');
     const [pwd, setpwd] = useState('');
     const [loginMsg, setLoginMsg] = useState('');
-    const history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -20,24 +18,47 @@ const Login = ({setIsAuthenticated}) => {
     }
 
     return (
-        <div className="login-wrapper">
+        <Container component="main" maxWidth="xs">
+            <Typography component="h1" variant="h5">
+                Sign in
+            </Typography>
+            <Box component="form" onSubmit={handleSubmit}>
 
-            <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" >
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control type="text" placeholder="Enter username" onChange={e => setUname(e.target.value)} />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" onChange={e => setpwd(e.target.value)} />
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                    Submit
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="username"
+                    label="User Name"
+                    name="username"
+                    autoComplete="username"
+                    autoFocus
+                    onChange={e => setUname(e.target.value)}
+                />
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    onChange={e => setpwd(e.target.value)}
+                />
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                >
+                    Sign In
                 </Button>
-            </Form>
+                <Typography variant="caption">Note : Username-foo, pwd- bar</Typography>
+            </Box>
             <div>{loginMsg}</div>
-        </div>
+        </Container>
     )
 }
 
-export default Login;
+export default withRouter(Login);
